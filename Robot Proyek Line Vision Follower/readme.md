@@ -4,7 +4,7 @@
 ## Robot Proyek : "Line Vision Robot"
 
 # Schematic
-![Logo](https://github.com/muropraktikum/PTA-2022-2023/blob/main/Robot%20Proyek%20Line%20Vision%20Follower/schematic.png)
+![Logo](https://github.com/fauziallagan/Robot-Proyek-Line-Vision-Follower/blob/main/Robot%20Proyek%20Line%20Vision%20Follower/schematic.png)
 
 ## Documentation
 
