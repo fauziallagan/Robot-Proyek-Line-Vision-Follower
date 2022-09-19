@@ -1,10 +1,10 @@
 
-# Laboratorium Multimedia dan Robotika Universitas Gundarma
+# Laboratorium Multimedia dan Robotika Universitas Gunadarma
 
 "Line Vision Robot"
 
 # Schematic
-![Logo](https://github.com/fauziallagan/rfid/blob/master/schematic.png)
+![Logo](https://github.com/muropraktikum/Robot-Proyek-Line-Vision-Follower/blob/main/Robot%20Proyek%20Line%20Vision%20Follower/schematic.png)
 
 ## Documentation
 
@@ -46,18 +46,7 @@
 #### Example Vibration Sensor Code
 
 ```c++
-  void vibration()
-{
-  vibrationSensorState = digitalRead(vibrationSensorPin);
-  if (vibrationSensorState == 1)
-  { // Jika ada getaran di sensor = HIGH
-    Serial.println("Getaran Terdeteksi!");
-    digitalWrite(buzzPin, LOW);
-    delay(1000);
-    digitalWrite(buzzPin, HIGH);
-    delay(1000);
-  }
-}
+Comming soon
 ```
 
 | Parameter | Description                |
