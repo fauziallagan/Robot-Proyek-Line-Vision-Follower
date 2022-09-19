@@ -12,8 +12,8 @@
   https://github.com/tensorflow/tfjs-models/blob/master/coco-ssd/src/classes.ts
 
              //beranda
-  //video streaming       <img src="http://192.168.xxx.xxx:81/stream">
-  //capture          <img src="http://192.168.xxx.xxx/capture">
+  //video streaming       <img src="http://192.168.1.100:81/stream">
+  //capture          <img src="http://192.168.1.100/capture">
   //nilai parameter video
 
   parameter khusus :
@@ -22,7 +22,7 @@
 
   IP dari Akeses Point bawaan： 192.168.4.1
 
-  format pemanggilan paramater khusus http://192.168.xxx.xxx/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
+  format pemanggilan paramater khusus http://192.168.1.100/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 
   Example : http://192.168.1.100/control?ip
   
@@ -38,8 +38,8 @@
   http://192.168.1.100/control?flash=value               //Flash value= 0-255
   http://192.168.1.100/control?servo=value               //Motor Servo value = 0-180
 
-  format parameter direkomendasikan  http://192.168.xxx.xxx/control?var=***&val=***
-  http://192.168.xxx.xxx/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
+  format parameter direkomendasikan  http://192.168.1.100/control?var=***&val=***
+  http://192.168.1.100/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
   http://192.168.1.100/control?var=quality&val=value      // value = 10 ~ 63
   http://192.168.1.100/control?var=brightness&val=value   // value = -2 ~ 2
   http://192.168.1.100/control?var=contrast&val=value     // value = -2 ~ 2
