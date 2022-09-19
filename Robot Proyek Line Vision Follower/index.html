@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Line Vison Robot</title>
+    <link rel="stylesheet" href="index.css">
+    <!-- gunakan script dibawah bila script offline mengalami error -->
+    <script src="https:\/\/fustyles.github.io/webduino/Tracking_20190917/tracking-min.js"></script>
+    <script src="./tracking-min.js"></script>
+  </head>
+  <figure>
+    <div id="stream-container" class="image-container hidden">
+      <div class="close" id="close-stream">×</div>
+      <img id="stream" src="" crossorigin="anonymous">
+      <table>
+        <tr>
+          <td align="left"><input type="range" id="leftpoint" min="0" max="1" value="0.8" step="0.05" required></td>
+          <td align="right"><input type="range" id="rightpoint" min="0" max="1" value="0.2" step="0.05" required></td>
+        </tr>
+        <tr>
+          <td colspan="2"><canvas id="canvas" width="0" height="0"></canvas><canvas id="canvas_pixel"
+              style="display:none;"></canvas></td>
+        </tr>
+      </table>
+    </div>
+  </figure>
+  <section id="buttons">
+    <table>
+      <tr>
+        <td colspan="3">IP: <input type="text" id="ip" value=""><input type="button" id="setip" value="Set IP"
+            onclick="start();"></td>
+      </tr>
+      <tr>
+        <td align="left"><button id="restartButton">Restart</button></td>
+        <td align="center"><button id="get-still">get-still</button></td>
+        <td align="right"><button id="toggle-stream">Start Stream</button></td>
+      </tr>
+    </table>
+  </section>
+  <section class="main">
+    <section id="buttons">
+      <table id="buttonPanel" style="display:none">
+        <tr>
+          <td colspan="3"><input type="checkbox" id="nostop" onclick="noStop();">No Stop</td>
+        </tr>
+        <tr bgcolor="#363636">
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=6');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=6');"
+              ontouchend="noStop();">FrontLeft</button></td>
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=1');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=1');" ontouchend="noStop();">Front</button>
+          </td>
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=7');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=7');"
+              ontouchend="noStop();">FrontRight</button></td>
+        </tr>
+        <tr bgcolor="#363636">
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=2');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=2');" ontouchend="noStop();">Left</button>
+          </td>
+          <td align="center"><button onclick="stopDetection();car('/control?var=car&val=3');">Stop</button></td>
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=4');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=4');" ontouchend="noStop();">Right</button>
+          </td>
+        </tr>
+        <tr bgcolor="#363636">
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=8');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=8');"
+              ontouchend="noStop();">LeftAfter</button></td>
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=5');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=5');" ontouchend="noStop();">Back</button>
+          </td>
+          <td align="center"><button onmousedown="stopDetection();car('/control?var=car&val=9');" onmouseup="noStop();"
+              ontouchstart="event.preventDefault();car('/control?var=car&val=9');"
+              ontouchend="noStop();">RightAfter</button></td>
+        </tr>
+      </table>
+    </section>
+    <div id="logo">
+      <label for="nav-toggle-cb" id="nav-toggle">&#9776;&nbsp;&nbsp;Toggle settings</label>
+    </div>
+    <div id="content">
+      <div id="sidebar">
+        <input type="checkbox" id="nav-toggle-cb">
+        <nav id="menu">
+          <div class="input-group" id="rectheight-group">
+            <label for="rectheight">Rect Height</label>
+            <div class="range-min">20</div>
+            <input type="range" id="rectheight" min="20" max="400" step="10" value="30" class="my-action">
+            <div class="range-max">320</div>
+          </div>
+          <div class="input-group" id="Rmin-group">
+            <label for="Rmin">R min</label>
+            <div class="range-min">0</div>
+            <input type="range" id="Rmin" min="0" max="255" value="0" step="1" class="my-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="Rmax-group">
+            <label for="Rmax">R max</label>
+            <div class="range-min">0</div>
+            <input type="range" id="Rmax" min="0" max="255" value="0" step="1" class="my-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="Gmin-group">
+            <label for="Gmin">G min</label>
+            <div class="range-min">0</div>
+            <input type="range" id="Gmin" min="0" max="255" value="0" step="1" class="my-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="Gmax-group">
+            <label for="Gmax">G max</label>
+            <div class="range-min">0</div>
+            <input type="range" id="Gmax" min="0" max="255" value="0" step="1" class="my-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="Bmin-group">
+            <label for="Bmin">B min</label>
+            <div class="range-min">0</div>
+            <input type="range" id="Bmin" min="0" max="255" value="0" step="1" class="my-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="Bmax-group">
+            <label for="Bmax">B max</label>
+            <div class="range-min">0</div>
+            <input type="range" id="Bmax" min="0" max="255" value="0" step="1" class="my-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="pixel-group">
+            <label for="pixel">Pixel Map</label>
+            <div class="switch">
+              <input id="pixel" type="checkbox">
+              <label class="slider" for="pixel"></label>
+            </div>
+          </div>
+          <div class="input-group" id="detectState-group">
+            <label for="detectState">Start Detect</label>
+            <div class="switch">
+              <input id="detectState" type="checkbox">
+              <label class="slider" for="detectState"></label>
+            </div>
+          </div>
+          <div class="input-group" id="motorState-group">
+            <label for="motorState">Control Motor</label>
+            <div class="switch">
+              <input id="motorState" type="checkbox">
+              <label class="slider" for="motorState"></label>
+            </div>
+          </div>
+          <div class="input-group" id="speedR-group">
+            <label for="speedR">speed R</label>
+            <div class="range-min">0</div>
+            <input type="range" id="speedR" min="0" max="255" value="255" class="default-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="speedL-group">
+            <label for="speedL">speed L</label>
+            <div class="range-min">0</div>
+            <input type="range" id="speedL" min="0" max="255" value="255" class="default-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="decelerate-group">
+            <label for="decelerate">Turn Decelerate</label>
+            <div class="range-min">0</div>
+            <input type="range" id="decelerate" min="0" max="1" value="0.6" step="0.1" class="default-action">
+            <div class="range-max">1</div>
+          </div>
+          <div class="input-group" id="turnDelayMax-group">
+            <label for="turnDelayMax">Turn Delay Max</label>
+            <div class="range-min">10</div>
+            <input type="range" id="turnDelayMax" min="10" max="1000" value="60" step="10" class="my-action">
+            <div class="range-max">1000</div>
+          </div>
+          <div class="input-group" id="turnDelayMin-group">
+            <label for="turnDelayMin">Turn Delay Min</label>
+            <div class="range-min">10</div>
+            <input type="range" id="turnDelayMin" min="10" max="1000" value="30" step="10" class="my-action">
+            <div class="range-max">1000</div>
+          </div>
+          <div class="input-group" id="forwardDelay-group">
+            <label for="forwardDelay">Forward Delay</label>
+            <div class="range-min">10</div>
+            <input type="range" id="forwardDelay" min="10" max="1000" value="30" step="10" class="my-action">
+            <div class="range-max">1000</div>
+          </div>
+          <div class="input-group" id="panel-group">
+            <label for="panel">Button Panel</label>
+            <div class="switch">
+              <input id="panel" type="checkbox">
+              <label class="slider" for="panel"></label>
+            </div>
+          </div>
+          <div class="input-group" id="servo-group">
+            <label for="servo">Servo</label>
+            <div class="range-min">0</div>
+            <input type="range" id="servo" min="0" max="180" value="90" class="default-action">
+            <div class="range-max">180</div>
+          </div>
+          <div class="input-group" id="flash-group">
+            <label for="flash">Flash</label>
+            <div class="range-min">0</div>
+            <input type="range" id="flash" min="0" max="255" value="0" class="default-action">
+            <div class="range-max">255</div>
+          </div>
+          <div class="input-group" id="framesize-group">
+            <label for="framesize">Resolution</label>
+            <select id="framesize" class="default-action">
+              <option value="10">UXGA(1600x1200)</option>
+              <option value="9">SXGA(1280x1024)</option>
+              <option value="8">XGA(1024x768)</option>
+              <option value="7">SVGA(800x600)</option>
+              <option value="6">VGA(640x480)</option>
+              <option value="5">CIF(400x296)</option>
+              <option value="4" selected="selected">QVGA(320x240)</option>
+              <option value="3">HQVGA(240x176)</option>
+              <option value="0">QQVGA(160x120)</option>
+            </select>
+          </div>
+          <div class="input-group" id="quality-group">
+            <label for="quality">Quality</label>
+            <div class="range-min">10</div>
+            <input type="range" id="quality" min="10" max="63" value="10" class="default-action">
+            <div class="range-max">63</div>
+          </div>
+          <div class="input-group" id="brightness-group">
+            <label for="brightness">Brightness</label>
+            <div class="range-min">-2</div>
+            <input type="range" id="brightness" min="-2" max="2" value="0" class="default-action">
+            <div class="range-max">2</div>
+          </div>
+          <div class="input-group" id="contrast-group">
+            <label for="contrast">Contrast</label>
+            <div class="range-min">-2</div>
+            <input type="range" id="contrast" min="-2" max="2" value="0" class="default-action">
+            <div class="range-max">2</div>
+          </div>
+          <div class="input-group" id="hmirror-group">
+            <label for="hmirror">H-Mirror</label>
+            <div class="switch">
+              <input id="hmirror" type="checkbox" class="default-action" checked="checked">
+              <label class="slider" for="hmirror"></label>
+            </div>
+          </div>
+          <div class="input-group" id="vflip-group">
+            <label for="vflip">V-Flip</label>
+            <div class="switch">
+              <input id="vflip" type="checkbox" class="default-action" checked="checked">
+              <label class="slider" for="vflip"></label>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </section>
+  <div id="result" style="color:yellow"></div>
+  </body>
+  <script src="./index.js" type="text/javascript"></script>
+
+</html>
