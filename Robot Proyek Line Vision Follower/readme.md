@@ -8,7 +8,7 @@
 
 ## Documentation
 
-#### Wemos D1 R1 Pinout
+#### ESP32 CAM Pinout
 
 | PIN | Type     | Description                |
 | :-------- | :------- | :------------------------- |
