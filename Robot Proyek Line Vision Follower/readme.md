@@ -8,6 +8,8 @@
 
 ## Documentation
 
+gunakan library -> https://dl.espressif.com/dl/package_esp32_index.json
+
 #### ESP32 CAM Pinout
 
 | PIN | Type     | Description                |
